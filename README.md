@@ -1,3 +1,6 @@
+forked and modified from  https://github.com/fabric8-quickstarts/karaf2-camel-log
+
+
 # Karaf 2 Camel Log QuickStart
 
 This quickstart shows a simple Apache Camel application that logs a message to the server log every 5th second.
