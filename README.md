@@ -33,7 +33,9 @@ Admin rights are required to create/replace in the openshift namespace
 ## Running the example in OpenShift using template
 
 Create the following environment variables. Make the appropriate modifications
+
     export OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME=fis-karaf-camel-route
+
     export GIT_REPO_CAMEL_NO_AMQ=https://github.com/gbengataylor/karaf2-camel-log.git
 
 Deploy the camel route 
