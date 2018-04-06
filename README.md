@@ -1,9 +1,9 @@
-forked and modified from  https://github.com/fabric8-quickstarts/karaf2-camel-log
+forked and modified from [quickstart](https://github.com/fabric8-quickstarts/karaf2-camel-log)
 
 
 # Karaf 2 Camel Log QuickStart
 
-This quickstart shows a simple Apache Camel application that logs a message to the server log every 5th second.
+This quickstart shows a simple Apache Camel Karaf 2 application deployed on OpenShift that logs a message to the server log every 5th second.
 
 This example is implemented using solely the XML DSL (there is no Java code). The source code is provided in the following XML file `src/main/resources/OSGI-INF/blueprint/camel-log.xml`.
 It also shows how Karaf assembly files can be overriden using resources from `src/main/resources/assembly/`. In the included sample log file `etc/org.ops4j.pax.logging.cfg` uncommenting the following line will enable verbose Camel log messages
@@ -11,58 +11,35 @@ It also shows how Karaf assembly files can be overriden using resources from `sr
     #log4j.logger.org.apache.camel=DEBUG
 
 
-### Building
+## Pre-requisites 
 
-The example can be built with
+### Download the required FIS 2.0 Karaf images 
 
-    mvn clean install -Ddocker.skip
+    oc create -n openshift -f https://raw.githubusercontent.com/jboss-fuse/application-templates/fis-2.0.x.redhat-R6/fis-image-streams.json
 
-
-### Running the example in fabric8
-
-It is assumed that OpenShift platform is already running. If not you can find details how to [Install OpenShift at your site](https://docs.openshift.com/enterprise/3.1/install_config/install/index.html).
-
-The example can be built and deployed using a single goal:
-
-    mvn fabric8:deploy -Dfabric8.mode=openshift
-
-When the example runs in OpenShift, you can use the OpenShift client tool to inspect the status
-
-To list all the running pods:
-
-    oc get pods
-
-Then find the name of the pod that runs this quickstart, and output the logs from the running pods with:
-
-    oc logs <name of pod>
-
-You can also use the OpenShift [web console](https://docs.openshift.com/enterprise/3.1/getting_started/developers/developers_console.html#tutorial-video) to manage the
-running pods, and view logs and much more.
+Admin rights are required to create in the openshift namespace
 
 
-### Running the example using OpenShift S2I template
+### Download the template 
 
-The example can also be built and run using the included S2I template quickstart-template.json.
+    oc create -n openshift -f  https://raw.githubusercontent.com/jboss-fuse/application-templates/fis-2.0.x.redhat-R6/quickstarts/karaf2-camel-log-template.json
 
-The application can be run directly by first editing the template file and populating S2I build parameters, including the required parameter GIT_REPO and then executing the command:
+if it already exists
 
-    oc new-app -f quickstart-template.json
+   oc replace -n openshift -f  https://raw.githubusercontent.com/jboss-fuse/application-templates/fis-2.0.x.redhat-R6/quickstarts/karaf2-camel-log-template.json
+    		
+Admin rights are required to create/replace in the openshift namespace
 
-Alternatively the template file can be used to create an OpenShift application template by executing the command:
+## Running the example in OpenShift using template
 
-    oc create -f quickstart-template.json
+Create the following environment variables. Make the appropriate modifications
+   export OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME=fis-karaf-camel-route
+   export GIT_REPO_CAMEL_NO_AMQ=https://github.com/gbengataylor/karaf2-camel-log.git
+
+Deploy the camel route 
+
+   oc new-app --template=s2i-karaf2-camel-log app=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} --param  APP_NAME=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} --param GIT_REPO=${GIT_REPO_CAMEL_NO_AMQ}  --param SERVICE_NAME=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} -l app=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME}
 
 
-#### Integration Testing
 
-The example includes a [fabric8 arquillian](https://github.com/fabric8io/fabric8/tree/master/components/fabric8-arquillian) Kubernetes Integration Test. 
-Once the container image has been built and deployed in Kubernetes, the integration test can be run with:
-
-	mvn test -Dtest=*KT
-
-The test is disabled by default and has to be enabled using `-Dtest`. [Integration Testing](https://fabric8.io/guide/testing.html) and [Fabric8 Arquillian Extension](https://fabric8.io/guide/arquillian.html) provide more information on writing full fledged black box integration tests for Kubernetes. 
-
-### More details
-
-You can find more details about running this [quickstart](http://fabric8.io/guide/quickstarts/running.html) on the website. This also includes instructions how to change the Docker image user and registry.
 
