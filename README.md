@@ -26,19 +26,19 @@ Admin rights are required to create in the openshift namespace
 
 if it already exists
 
-   oc replace -n openshift -f  https://raw.githubusercontent.com/jboss-fuse/application-templates/fis-2.0.x.redhat-R6/quickstarts/karaf2-camel-log-template.json
+    oc replace -n openshift -f  https://raw.githubusercontent.com/jboss-fuse/application-templates/fis-2.0.x.redhat-R6/quickstarts/karaf2-camel-log-template.json
     		
 Admin rights are required to create/replace in the openshift namespace
 
 ## Running the example in OpenShift using template
 
 Create the following environment variables. Make the appropriate modifications
-   export OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME=fis-karaf-camel-route
-   export GIT_REPO_CAMEL_NO_AMQ=https://github.com/gbengataylor/karaf2-camel-log.git
+    export OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME=fis-karaf-camel-route
+    export GIT_REPO_CAMEL_NO_AMQ=https://github.com/gbengataylor/karaf2-camel-log.git
 
 Deploy the camel route 
 
-   oc new-app --template=s2i-karaf2-camel-log app=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} --param  APP_NAME=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} --param GIT_REPO=${GIT_REPO_CAMEL_NO_AMQ}  --param SERVICE_NAME=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} -l app=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME}
+    oc new-app --template=s2i-karaf2-camel-log app=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} --param  APP_NAME=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} --param GIT_REPO=${GIT_REPO_CAMEL_NO_AMQ}  --param SERVICE_NAME=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} -l app=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME}
 
 
 
