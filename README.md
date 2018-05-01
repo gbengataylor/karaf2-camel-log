@@ -40,7 +40,7 @@ Create the following environment variables. Make the appropriate modifications
 
 Deploy the camel route 
 
-    oc new-app --template=s2i-karaf2-camel-log app=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} --param  APP_NAME=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} --param GIT_REPO=${GIT_REPO_CAMEL_NO_AMQ}  --param SERVICE_NAME=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} -l app=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME}
+    oc new-app --template=s2i-karaf2-camel-log app=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} --param  APP_NAME=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME} --param GIT_REPO=${GIT_REPO_CAMEL_NO_AMQ}  --param SERVICE_NAME=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME}  --param BUILDER_VERSION=2.0 --param GIT_REF=master  -l app=${OPENSHIFT_CAMEL_NO_AMQ_APPLICATION_NAME}
 
 
 
